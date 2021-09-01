@@ -5,6 +5,7 @@
 import argparse
 import sys
 import re
+import gzip
 import pandas as pd
 import numpy as np
 
@@ -22,14 +23,13 @@ args = parser.parse_known_args()    #Use parse_known_arg to differentiate betwee
 
 #options = args[0]   # Get the 2 arrays of known/unknown arguments from the tuple
 files = args[1]
-outfile_collated = 'collated_kallisto.tsv'
+outfile_collated = 'collated_kallisto.tsv.gz'
 outfile_processed = 'classifier_input.tsv.gz'
 
 # Checks
 if(len(files) == 0):
     print("Please specify input Kallisto files.")
     sys.exit()
-
 
 
 #Make sure no input file named collated_kallisto.tsv
@@ -53,8 +53,8 @@ df_meta = pd.read_csv(metadata_file, sep='\t')
 #Collate all Kallisto files
 include_header = True
 
-with open(outfile_collated, 'w') as out_collated:
-
+#with open(outfile_collated, 'w') as out_collated:
+with gzip.open(outfile_collated, 'wb') as out_collated:
     for file in files:
         accession = (re.split('\s|_|\.', file))[0]
         try:
@@ -63,12 +63,12 @@ with open(outfile_collated, 'w') as out_collated:
                 header = f.readline()
                 header = 'Accession\t' + header
                 if(include_header):
-                    out_collated.writelines(header)
+                    out_collated.write(header.encode('utf-8'))
                     include_header = False
 
                 for line in f:
                     outline = accession + "\t" + line 
-                    out_collated.writelines(outline)
+                    out_collated.write(outline.encode('utf-8'))
         except(FileNotFoundError):
             print(f'Could not find file {file}')
             sys.exit()
@@ -111,7 +111,7 @@ print("Unique accessions (cell lines) after merging Kallisto data with metadata:
 del(df_kallisto)
 del(df_meta)
 
-# Calculate log10 values (convert 0 to 0.0001 to prevent division by zero errors)
+# Calculate log10 values (add 1 to prevent log zero errors)
 df_merged_data['log10_tpm'] = df_merged_data['tpm'] + 1
 df_merged_data['log10_tpm'] = np.log10(df_merged_data['log10_tpm'])
 
@@ -133,7 +133,6 @@ target_stdevs = (
         .rename(columns={'log10_tpm': 'target_StdDev_log10_tpm'})
         .reset_index()
     )
-
 
 df_merged_data = pd.merge(df_merged_data, target_means, how='inner', on='target_id') 
 df_merged_data = pd.merge(df_merged_data, target_stdevs, how='inner', on='target_id')
