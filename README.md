@@ -9,7 +9,7 @@ download_files_list_wget.txt - file that may be used with wget to download the d
 dataset_summary.tsv - summary file of the datasets that includes differentiation scores
 
 ## Repository Scripts
-collate_kallisto.py - collates the Kallisto data into one file
+create_classifier_datafile.py - collates the Kallisto data into one file
 
 
 ## Processing RNA-seq datasets
