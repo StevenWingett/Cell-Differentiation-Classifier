@@ -134,8 +134,18 @@ target_stdevs = (
         .reset_index()
     )
 
+target_maximums = (
+    df_merged_data
+        .groupby(by='target_id')
+        .max()
+        .filter(items=['target_id', 'log10_tpm'])
+        .rename(columns={'log10_tpm': 'target_max_log10_tpm'})
+        .reset_index()
+    )
+
 df_merged_data = pd.merge(df_merged_data, target_means, how='inner', on='target_id') 
 df_merged_data = pd.merge(df_merged_data, target_stdevs, how='inner', on='target_id')
+df_merged_data = pd.merge(df_merged_data, target_maximums, how='inner', on='target_id')
 df_merged_data['z_score'] = (df_merged_data['log10_tpm'] - df_merged_data['target_mean_log10_tpm']) / df_merged_data['target_StdDev_log10_tpm']
 
 #Write out the result
