@@ -26,6 +26,12 @@ outfile_collated = 'collated_kallisto.tsv'
 outfile_processed = 'classifier_input.tsv.gz'
 
 # Checks
+if(len(files) == 0):
+    print("Please specify input Kallisto files.")
+    sys.exit()
+
+
+
 #Make sure no input file named collated_kallisto.tsv
 for file in files:
     if(file == outfile_collated):
