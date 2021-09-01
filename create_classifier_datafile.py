@@ -108,8 +108,8 @@ unique_accession_merged_count = (df_merged_data['Accession']
 print("Unique accessions (cell lines) after merging Kallisto data with metadata: " + str(unique_accession_merged_count))
 
 #Delete large data objects
-#del(df_kallisto)
-#del(df_meta)
+del(df_kallisto)
+del(df_meta)
 
 # Calculate log10 values (convert 0 to 0.0001 to prevent division by zero errors)
 df_merged_data['log10_tpm'] = df_merged_data['tpm'] + 1
