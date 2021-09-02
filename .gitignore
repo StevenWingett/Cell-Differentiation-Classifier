@@ -130,4 +130,4 @@ dmypy.json
 
 # Additionals (not necessarily Python-related)
 .Rhistory
-
+.DS_Store
