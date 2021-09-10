@@ -1,0 +1,93 @@
+Bootstrap: docker
+From: ubuntu:18.04
+Stage: build
+
+
+%setup
+
+
+%files
+
+
+%environment
+    export LC_ALL=C
+
+
+%post
+    #General setup
+    NOW=`date`
+    echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+    apt -y update
+
+    #Prevent localtime warning
+    touch /etc/localtime    
+
+    #General installations
+    apt install -y wget
+    apt install -y zip
+    apt -y install perl5.26
+    apt install -y cpanminus
+    apt install -y default-jre
+    apt install -y python3.7
+    apt install -y python3-pip
+    
+    #Download and install bioinformatics software
+    #FastQC
+    mkdir -p /opt/mapping_software/fastqc
+    cd /opt/mapping_software/fastqc
+    wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip
+    unzip fastqc_v0.11.9.zip
+    chmod a+x /opt/mapping_software/fastqc/FastQC/fastqc
+    ln -s /opt/mapping_software/fastqc/FastQC/fastqc /usr/bin/fastqc
+
+    #MultiQC
+    /usr/bin/python3.7 -m pip install multiqc==1.11
+
+    #Cutadapt
+    #pip3 install cutadapt==3.2
+   # /usr/bin/python3.7 -m pip install cutadapt==2.4
+
+    #Trim Galore
+    mkdir /opt/mapping_software/trim_galore
+    cd /opt/mapping_software/trim_galore
+    wget https://github.com/FelixKrueger/TrimGalore/archive/refs/tags/0.6.3.tar.gz
+    tar xvzf 0.6.3.tar.gz
+    chmod a+x /opt/mapping_software/trim_galore/TrimGalore-0.6.3/trim_galore
+    ln -s /opt/mapping_software/trim_galore/TrimGalore-0.6.3/trim_galore /usr/bin/trim_galore
+
+    #Kallisto
+    mkdir /opt/mapping_software/kallisto
+    cd /opt/mapping_software/kallisto
+    wget https://github.com/pachterlab/kallisto/releases/download/v0.46.1/kallisto_linux-v0.46.1.tar.gz
+    tar xvzf kallisto_linux-v0.46.1.tar.gz
+    chmod a+x /opt/mapping_software/kallisto/kallisto/kallisto
+    ln -s /opt/mapping_software/kallisto/kallisto/kallisto /usr/bin/kallisto
+    
+    
+%runscript
+    echo "Container was created $NOW"
+    echo "Arguments received: $*"
+    exec echo "$@"
+
+
+%startscript
+
+
+%test
+    grep -q NAME=\"Ubuntu\" /etc/os-release
+    if [ $? -eq 0 ]; then
+        echo "Container base is Ubuntu as expected."
+    else
+        echo "Container base is not Ubuntu."
+        exit 1
+    fi
+
+
+%labels
+    Author Steven Wingett
+
+
+%help
+    This is a container for mapping RNA-seq reads for use by the
+    cell differentiation classifer:
+    https://github.com/StevenWingett/Cell-Differentiation-Classifier
