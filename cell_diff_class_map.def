@@ -12,6 +12,10 @@ Stage: build
 %environment
     export LC_ALL=C
 
+    #For MultiQC
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
+
 
 %post
     #General setup
@@ -28,8 +32,8 @@ Stage: build
     apt -y install perl5.26
     apt install -y cpanminus
     apt install -y default-jre
-    apt install -y python3.7
-    apt install -y python3-pip
+    apt install -y python3.6
+    apt install -y python3-pip=9.0.1-2.3~ubuntu1.18.04.5
     
     #Download and install bioinformatics software
     #FastQC
@@ -41,11 +45,10 @@ Stage: build
     ln -s /opt/mapping_software/fastqc/FastQC/fastqc /usr/bin/fastqc
 
     #MultiQC
-    /usr/bin/python3.7 -m pip install multiqc==1.11
+    /usr/bin/python3.6 -m pip install multiqc==1.11
 
     #Cutadapt
-    #pip3 install cutadapt==3.2
-   # /usr/bin/python3.7 -m pip install cutadapt==2.4
+    /usr/bin/python3.6 -m pip install cutadapt==3.1
 
     #Trim Galore
     mkdir /opt/mapping_software/trim_galore
