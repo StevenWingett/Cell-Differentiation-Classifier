@@ -34,6 +34,8 @@ Stage: build
     apt install -y default-jre
     apt install -y python3.6
     apt install -y python3-pip=9.0.1-2.3~ubuntu1.18.04.5
+    apt install -y rename
+    apt install -y git
     
     #Download and install bioinformatics software
     #FastQC
@@ -66,7 +68,10 @@ Stage: build
     chmod a+x /opt/mapping_software/kallisto/kallisto/kallisto
     ln -s /opt/mapping_software/kallisto/kallisto/kallisto /usr/bin/kallisto
     
-    
+    #Git repo download
+    git clone https://github.com/StevenWingett/Cell-Differentiation-Classifier.git /opt/Git/Cell-Differentiation-Classifier
+
+
 %runscript
     echo "Container was created $NOW"
     echo "Arguments received: $*"
