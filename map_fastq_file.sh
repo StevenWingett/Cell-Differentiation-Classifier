@@ -22,4 +22,4 @@ rename -e s/\.50bp_5prime\.fq\.gz\.abundance\.tsv/.abundance.tsv/ *.abundance.ts
 
 #MultiQC
 echo "Producing Multi QC Report"
-multiqc .
+multiqc --ignore cell_diff_class_map* .
