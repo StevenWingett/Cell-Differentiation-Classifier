@@ -79,14 +79,14 @@ Stage: build
 %runscript
     echo "Container was created $NOW"
     echo "Arguments received: $*"
-    exec echo "$@"
+    echo "$@"
     
     #Perform QC and mapping
     cd /mnt
     /opt/Git/Cell-Differentiation-Classifier/map_fastq_file.sh $1
 
     #Aggregate results and results into usable format
-    python3 /opt/Git/Cell-Differentiation-Classifier/create_classifier_datafile.py *.abundance.tsv 
+    exec python3 /opt/Git/Cell-Differentiation-Classifier/create_classifier_datafile.py *.abundance.tsv 
 
 
 %startscript

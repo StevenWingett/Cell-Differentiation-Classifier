@@ -14,7 +14,7 @@ for F in *.50bp_5prime.fq.gz; do fastqc $F; done
 
 #Kallisto Mapping ($1 is Kallisto index file argument)
 echo "Kallisto Mapping"
-for F in *.50bp_5prime.fq.gz; do kallisto quant -i $1 -o $F.kallisto --single -l 200 -s 20 -t 20 $F &> ${F}_kallisto.log; done
+for F in *.50bp_5prime.fq.gz; do kallisto quant -i $1 -o $F.kallisto --single -l 200 -s 20 -t 20 $F 2> ${F}_kallisto.log; done
 
 #Create links to Kallisto output for ease of analysis
 for F in *.50bp_5prime.fq.gz; do ln -s $F.kallisto/abundance.tsv $F.abundance.tsv; done
