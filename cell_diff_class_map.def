@@ -97,5 +97,9 @@ Stage: build
 
 %help
     This is a container for mapping RNA-seq reads for use by the
-    cell differentiation classifer:
+    cell differentiation classifer, see:
     https://github.com/StevenWingett/Cell-Differentiation-Classifier
+
+    See the README.md in the GitHub repository for details on how to
+    run the classifier (both mapping and classifictaion).
+    
