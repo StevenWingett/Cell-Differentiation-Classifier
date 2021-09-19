@@ -2,10 +2,10 @@
 echo "Trimming FASTQ Files"
 
 #Standard Trimming
-for F in *.fastq.gz; do trim_galore --gzip $F; done
+for F in *.fastq.gz; do trim_galore --gzip $F 2> trim1.$F.out; done
 
 #Trim to 50 bps to allow consistent processing of different input files
-for F in *_trimmed.fq.gz; do trim_galore --hardtrim5 50 --gzip --fastqc $F; done 
+for F in *_trimmed.fq.gz; do trim_galore --hardtrim5 50 --gzip $F 2> trim2.$F.out; done 
 
 #FastQC on input and Final output files
 echo "Producing FastQC Reports"
