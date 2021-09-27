@@ -10,15 +10,6 @@ else
     exit 1
 fi
 
-# Check dataset_summary.tsv present
-if [ -f dataset_summary.tsv ]; then
-    echo "File dataset_summary.tsv found"
-else 
-    echo "File dataset_summary.tsv does not exist"
-    echo "Adjust configuration."
-    exit 1
-fi
-
 # Check Kallisto index specifed
 if [ -f $1 ]; then
     echo "Kallisto index file $1 found"

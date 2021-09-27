@@ -81,6 +81,15 @@ Stage: build
     echo "Arguments received: $*"
     echo "$@"
     
+    # Check dataset_summary.tsv present
+    if [ -f dataset_summary.tsv ]; then
+        echo "File dataset_summary.tsv found"
+    else 
+        echo "File dataset_summary.tsv does not exist"
+        echo "Adjust configuration."
+        exit 1
+    fi
+    
     #Perform QC and mapping
     cd /mnt
     /opt/Git/Cell-Differentiation-Classifier/map_fastq_file.sh $1
