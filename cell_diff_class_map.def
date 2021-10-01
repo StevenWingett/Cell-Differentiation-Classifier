@@ -82,6 +82,7 @@ Stage: build
     echo "$@"
     
     # Check dataset_summary.tsv present
+    cd /mnt
     if [ -f dataset_summary.tsv ]; then
         echo "File dataset_summary.tsv found"
     else 
@@ -91,7 +92,6 @@ Stage: build
     fi
     
     #Perform QC and mapping
-    cd /mnt
     /opt/Git/Cell-Differentiation-Classifier/map_fastq_file.sh $1
 
     #Aggregate results and results into usable format
