@@ -92,8 +92,10 @@ Stage: build
     fi
     
     #Perform QC and mapping
-    /opt/Git/Cell-Differentiation-Classifier/map_fastq_file.sh $1
-
+    if ! /opt/Git/Cell-Differentiation-Classifier/map_fastq_file.sh $1; then
+        exit 1
+    fi
+ 
     #Aggregate results and results into usable format
     exec python3 /opt/Git/Cell-Differentiation-Classifier/create_classifier_datafile.py *.abundance.tsv 
 
