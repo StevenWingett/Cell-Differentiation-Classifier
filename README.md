@@ -29,6 +29,11 @@ This project's GitHub repository contains the metadata file 'dataset_summary.tsv
 
     map_fastq_file.sh [Kallisto transcriptome reference file] 
 
+## Misc Folder
+The Misc folder contains additional helper scripts which are not part of the main processing workflow, but which may be helpful when analysing data.
+
+**basic_prediction_summay.ipynb** - Jupyter Notebook to give a general summary (e.g. confusion matrix, Cohen's Kappa) of already-classified results (binary format).
+
 ## Workflow overview
 To improve consistency between samples (and any future samples), map only the forward read of paired-end data, or use single-end data.  This choice was made because unknown future samples may be single-ended, but if we have mapped against paired-end data originally to build our classification model, it will therefore not be possible to process all the data uniformly (i.e. since obviously single-end data cannot be mapped as paired-end data). 
 
