@@ -34,6 +34,8 @@ The Misc folder contains additional helper scripts which are not part of the mai
 
 **basic_prediction_summay.ipynb** - Jupyter Notebook to give a general summary (e.g. confusion matrix, Cohen's Kappa) of already-classified results (binary format).
 
+**transcript_gene_lookup.ipynb** - Jupyter Notebook to take a file of data which includes a 'target_id' column (corresponding to transcript IDs) and a transcript-gene lookup file (columns:'target_id' and 'gene_id'), and then generate a new file which contains the input data and a new column listing the corresponding gene names.
+
 ## Workflow overview
 To improve consistency between samples (and any future samples), map only the forward read of paired-end data, or use single-end data.  This choice was made because unknown future samples may be single-ended, but if we have mapped against paired-end data originally to build our classification model, it will therefore not be possible to process all the data uniformly (i.e. since obviously single-end data cannot be mapped as paired-end data). 
 
