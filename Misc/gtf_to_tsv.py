@@ -24,7 +24,9 @@ with gzip.open(gtf_file, 'rb') as f, gzip.open(outfile, 'wb') as fout:
         extra_data_elements = line_elements[8].split(";")
 
         gene_id = extra_data_elements[0].split()[1].strip('"')
+        gene_version = extra_data_elements[1].split()[1].strip('"')
         transcript_id = extra_data_elements[2].split()[1].strip('"')
+        transcript_version = extra_data_elements[3].split()[1].strip('"')
         gene_name = extra_data_elements[4].split()[1].strip('"')
         transcript_length = end - start + 1
         # print(type_description)
@@ -33,6 +35,10 @@ with gzip.open(gtf_file, 'rb') as f, gzip.open(outfile, 'wb') as fout:
         if(type_description != 'transcript'):
             continue
         
+        #Append version number to genes and transcripts
+        gene_id = gene_id + '.' + gene_version
+        transcript_id = transcript_id + '.' + transcript_version
+
         line_out = '\t'.join(str(e) for e in [transcript_id, gene_id, gene_name, csome, start, end, transcript_length])
         line_out = line_out + "\n"
         #print(extra_data_elements)
